@@ -5,16 +5,23 @@ Builds a 10-section daily digest (Word, Fact, Quote, Question, Image,
 Trivia, Tip, Discovery, History, Idea "of the Day") and writes it to
 README.md so it can be published with GitHub Pages.
 
-Most sections pull from free, no-key APIs. A few (Question, Tip,
-Discovery, Idea) don't have good free APIs, so they rotate through a
-curated list deterministically based on today's date, so the site is
-stable across multiple runs on the same day.
+v2 changes:
+- Every section now shows a one-line description of what it is.
+- Every section now shows the actual source (API name + link, or
+  "curated list" for the four sections without a good free API).
+- Failures now show the real error message instead of a generic one,
+  which makes debugging (e.g. rate limits, timeouts) much easier.
 
-The Image of the Day uses NASA's APOD API. It works out of the box with
-NASA's public DEMO_KEY, but that key is shared by everyone and rate
-limited. For reliability, set a NASA_API_KEY secret in your repo
-(free, instant sign-up at https://api.nasa.gov) and the workflow will
-use it automatically.
+Most sections pull from free, no-key APIs. Four sections (Question,
+Tip, Discovery, Idea) don't have good free APIs, so they rotate
+through a curated list deterministically based on today's date, so
+the site is stable across multiple runs on the same day.
+
+The Image of the Day uses NASA's APOD API. It works with NASA's public
+DEMO_KEY, but that key is shared globally and rate limited. For
+reliability, set a NASA_API_KEY secret in your repo (free, instant
+sign-up at https://api.nasa.gov) — the workflow already passes it
+through automatically if present.
 """
 
 import html
@@ -39,10 +46,16 @@ def get_json(url, headers=None):
         return json.loads(resp.read().decode("utf-8"))
 
 
+# Each section function returns (content_markdown, source_name, source_url).
+# "source_url" is a live link shown under the section so readers (and you,
+# debugging) can see exactly where the data came from.
+
 # ---------------------------------------------------------------------
 # 1. Word of the Day
 # ---------------------------------------------------------------------
 def word_of_the_day():
+    source_name = "Random Word API + Free Dictionary API"
+    source_url = "https://dictionaryapi.dev/"
     try:
         word = get_json("https://random-word-api.herokuapp.com/word")[0]
         entries = get_json(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}")
@@ -53,38 +66,51 @@ def word_of_the_day():
         example = definition_obj.get("example")
         text = f"**{word}** *({part_of_speech})* — {definition}"
         if example:
-            text += f"\n   > _\"{example}\"_"
-        return text
-    except Exception:
+            text += f"\n> _\"{example}\"_"
+        return text, source_name, source_url
+    except Exception as exc:
         fallback = [
             ("serendipity", "noun", "the occurrence of finding pleasant things by chance"),
             ("ephemeral", "adjective", "lasting for a very short time"),
             ("mellifluous", "adjective", "sweet or musical; pleasant to hear"),
         ]
         w, p, d = DAY_SEED.choice(fallback)
-        return f"**{w}** *({p})* — {d}"
+        text = f"**{w}** *({p})* — {d}\n\n_(Live lookup failed: {exc} — showing a fallback word.)_"
+        return text, source_name, source_url
 
 
 # ---------------------------------------------------------------------
 # 2. Fact of the Day
 # ---------------------------------------------------------------------
 def fact_of_the_day():
+    source_name = "Useless Facts API"
+    source_url = "https://uselessfacts.jsph.pl/"
     try:
         data = get_json("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en")
-        return data["text"]
-    except Exception:
-        return "Honey never spoils — archaeologists have found 3,000-year-old edible honey in Egyptian tombs."
+        return data["text"], source_name, source_url
+    except Exception as exc:
+        text = (
+            "Honey never spoils — archaeologists have found 3,000-year-old edible "
+            f"honey in Egyptian tombs.\n\n_(Live lookup failed: {exc} — showing a fallback fact.)_"
+        )
+        return text, source_name, source_url
 
 
 # ---------------------------------------------------------------------
 # 3. Quote of the Day
 # ---------------------------------------------------------------------
 def quote_of_the_day():
+    source_name = "ZenQuotes API"
+    source_url = "https://zenquotes.io/"
     try:
         data = get_json("https://zenquotes.io/api/today")[0]
-        return f"\"{data['q']}\" — {data['a']}"
-    except Exception:
-        return "\"The only way to do great work is to love what you do.\" — Steve Jobs"
+        return f"\"{data['q']}\" — {data['a']}", source_name, source_url
+    except Exception as exc:
+        text = (
+            "\"The only way to do great work is to love what you do.\" — Steve Jobs"
+            f"\n\n_(Live lookup failed: {exc} — showing a fallback quote.)_"
+        )
+        return text, source_name, source_url
 
 
 # ---------------------------------------------------------------------
@@ -126,43 +152,62 @@ QUESTIONS = [
 
 def question_of_the_day():
     idx = TODAY.timetuple().tm_yday % len(QUESTIONS)
-    return QUESTIONS[idx]
+    return QUESTIONS[idx], "Curated list (rotates daily by date)", None
 
 
 # ---------------------------------------------------------------------
 # 5. Image of the Day (NASA APOD)
 # ---------------------------------------------------------------------
 def image_of_the_day():
+    source_name = "NASA Astronomy Picture of the Day (APOD) API"
+    source_url = "https://apod.nasa.gov/apod/astropix.html"
     api_key = os.environ.get("NASA_API_KEY", "DEMO_KEY")
+    key_note = "your own key" if api_key != "DEMO_KEY" else "shared DEMO_KEY — rate limited"
     try:
         data = get_json(f"https://api.nasa.gov/planetary/apod?api_key={api_key}")
         title = data.get("title", "NASA Astronomy Picture of the Day")
         explanation = data.get("explanation", "")
         media_type = data.get("media_type", "image")
+        credit = data.get("copyright", "NASA / public domain unless noted")
+        apod_date = data.get("date", TODAY.isoformat())
         if media_type == "image":
             img_url = data.get("hdurl") or data.get("url")
-            body = f"![{title}]({img_url})\n\n**{title}**\n\n{explanation}"
+            body = (
+                f"![{title}]({img_url})\n\n**{title}** ({apod_date})\n\n{explanation}"
+                f"\n\n_Credit: {credit}. Fetched using {key_note}._"
+            )
         else:
-            # It's a video that day — link out instead of embedding.
-            body = f"**{title}** (video) — [watch here]({data.get('url')})\n\n{explanation}"
-        return body
-    except Exception:
-        return "_Couldn't reach NASA's APOD API today — check back tomorrow._"
+            body = (
+                f"**{title}** (video, {apod_date}) — [watch here]({data.get('url')})"
+                f"\n\n{explanation}\n\n_Credit: {credit}. Fetched using {key_note}._"
+            )
+        return body, source_name, source_url
+    except Exception as exc:
+        text = f"_Couldn't reach NASA's APOD API today._\n\n**Error:** `{exc}`\n\n_Using: {key_note}._"
+        return text, source_name, source_url
 
 
 # ---------------------------------------------------------------------
 # 6. Trivia of the Day
 # ---------------------------------------------------------------------
 def trivia_of_the_day():
+    source_name = "Open Trivia Database"
+    source_url = "https://opentdb.com/"
     try:
         data = get_json("https://opentdb.com/api.php?amount=1&type=multiple")
         q = data["results"][0]
         question = html.unescape(q["question"])
         correct = html.unescape(q["correct_answer"])
         category = html.unescape(q["category"])
-        return f"**[{category}]** {question}\n   > Answer: ||{correct}||"
-    except Exception:
-        return "**[Geography]** What is the smallest country in the world?\n   > Answer: ||Vatican City||"
+        difficulty = q.get("difficulty", "").capitalize()
+        text = f"**[{category} · {difficulty}]** {question}\n> Answer: ||{correct}||"
+        return text, source_name, source_url
+    except Exception as exc:
+        text = (
+            "**[Geography · Easy]** What is the smallest country in the world?\n"
+            f"> Answer: ||Vatican City||\n\n_(Live lookup failed: {exc} — showing a fallback question.)_"
+        )
+        return text, source_name, source_url
 
 
 # ---------------------------------------------------------------------
@@ -194,7 +239,7 @@ TIPS = [
 
 def tip_of_the_day():
     idx = TODAY.timetuple().tm_yday % len(TIPS)
-    return TIPS[idx]
+    return TIPS[idx], "Curated list (rotates daily by date)", None
 
 
 # ---------------------------------------------------------------------
@@ -226,23 +271,30 @@ DISCOVERIES = [
 
 def discovery_of_the_day():
     idx = TODAY.timetuple().tm_yday % len(DISCOVERIES)
-    return DISCOVERIES[idx]
+    return DISCOVERIES[idx], "Curated list (rotates daily by date)", None
 
 
 # ---------------------------------------------------------------------
 # 9. History of the Day ("on this day" API)
 # ---------------------------------------------------------------------
 def history_of_the_day():
+    source_name = "On This Day API (byabbe.se)"
+    source_url = "https://byabbe.se/on-this-day/"
     month, day = TODAY.month, TODAY.day
     try:
         data = get_json(f"https://byabbe.se/on-this-day/{month}/{day}/events.json")
         events = data.get("events", [])
         if not events:
-            raise ValueError("no events")
+            raise ValueError("API returned no events for today's date")
         pick = DAY_SEED.choice(events)
-        return f"**{pick['year']}** — {pick['description']}"
-    except Exception:
-        return "On this day in history, countless events shaped the world — check back tomorrow for a fresh one."
+        text = f"**{pick['year']}** — {pick['description']}"
+        return text, source_name, source_url
+    except Exception as exc:
+        text = (
+            "On this day in history, countless events shaped the world."
+            f"\n\n_(Live lookup failed: {exc} — check back tomorrow.)_"
+        )
+        return text, source_name, source_url
 
 
 # ---------------------------------------------------------------------
@@ -269,34 +321,51 @@ IDEAS = [
 
 def idea_of_the_day():
     idx = TODAY.timetuple().tm_yday % len(IDEAS)
-    return IDEAS[idx]
+    return IDEAS[idx], "Curated list (rotates daily by date)", None
 
 
 # ---------------------------------------------------------------------
 # Assemble and write
 # ---------------------------------------------------------------------
+SECTIONS = [
+    ("📖 Word of the Day", "A vocabulary word, expression, or piece of language worth learning.", word_of_the_day),
+    ("💡 Fact of the Day", "Something true, interesting, or surprising.", fact_of_the_day),
+    ("💬 Quote of the Day", "A quote — inspirational, funny, or philosophical.", quote_of_the_day),
+    ("❓ Question of the Day", "A prompt for reflection, conversation, or curiosity.", question_of_the_day),
+    ("🌌 Image of the Day", "NASA's Astronomy Picture of the Day.", image_of_the_day),
+    ("🧠 Trivia of the Day", "A quick knowledge challenge.", trivia_of_the_day),
+    ("✅ Tip of the Day", "Practical advice or a small life hack.", tip_of_the_day),
+    ("🔎 Discovery of the Day", "Something new to learn or explore.", discovery_of_the_day),
+    ("🕰️ History of the Day", "An event, person, or moment from history on this date.", history_of_the_day),
+    ("✨ Idea of the Day", "A thought, concept, possibility, or creative spark.", idea_of_the_day),
+]
+
+
 def main():
-    sections = [
-        ("📖 Word of the Day", word_of_the_day),
-        ("💡 Fact of the Day", fact_of_the_day),
-        ("💬 Quote of the Day", quote_of_the_day),
-        ("❓ Question of the Day", question_of_the_day),
-        ("🌌 Image of the Day", image_of_the_day),
-        ("🧠 Trivia of the Day", trivia_of_the_day),
-        ("✅ Tip of the Day", tip_of_the_day),
-        ("🔎 Discovery of the Day", discovery_of_the_day),
-        ("🕰️ History of the Day", history_of_the_day),
-        ("✨ Idea of the Day", idea_of_the_day),
+    lines = [
+        f"# Daily Digest — {TODAY.isoformat()}",
+        "",
+        "_A 10-part daily digest, refreshed automatically once a day._",
+        "",
     ]
 
-    lines = [f"# Daily Digest — {TODAY.isoformat()}", ""]
-    for title, func in sections:
+    for title, description, func in SECTIONS:
         lines.append(f"## {title}")
+        lines.append(f"_{description}_")
         lines.append("")
         try:
-            lines.append(func())
+            content, source_name, source_url = func()
         except Exception as exc:  # last-resort safety net per section
-            lines.append(f"_Unavailable today ({exc})._")
+            content, source_name, source_url = f"_Unavailable today: {exc}_", "N/A", None
+
+        lines.append(content)
+        lines.append("")
+        if source_url:
+            lines.append(f"**Source:** [{source_name}]({source_url})")
+        else:
+            lines.append(f"**Source:** {source_name}")
+        lines.append("")
+        lines.append("---")
         lines.append("")
 
     lines.append(f"_Last updated: {datetime.now(timezone.utc).isoformat()} UTC_")
@@ -308,4 +377,5 @@ def main():
 
 
 if __name__ == "__main__":
+    main()
     main()
