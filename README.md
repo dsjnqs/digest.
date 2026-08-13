@@ -1,11 +1,13 @@
 # Daily Digest — 2026-08-13
 
-_A 10-part daily digest, refreshed automatically once a day._
+_A daily digest, refreshed automatically once a day._
 
 ## 📖 Word of the Day
 _A vocabulary word, expression, or piece of language worth learning._
 
-**levee** *(noun)* — An embankment to prevent inundation; as, the levees along the Mississippi.
+_Word lookup failed today._
+
+**Error:** `HTTP Error 502: Bad Gateway`
 
 **Source:** [Random Word API + Free Dictionary API](https://dictionaryapi.dev/)
 
@@ -14,7 +16,7 @@ _A vocabulary word, expression, or piece of language worth learning._
 ## 💡 Fact of the Day
 _Something true, interesting, or surprising._
 
-Columbia University is the second largest landowner in New York City, after the Catholic Church.
+Most lipstick contains fish scales!
 
 **Source:** [Useless Facts API](https://uselessfacts.jsph.pl/)
 
@@ -26,15 +28,6 @@ _A quote — inspirational, funny, or philosophical._
 "Keep your face to the sunshine and you cannot see the shadows." — Helen Keller
 
 **Source:** [ZenQuotes API](https://zenquotes.io/)
-
----
-
-## ❓ Question of the Day
-_A prompt for reflection, conversation, or curiosity._
-
-What does an ideal ordinary day look like for you?
-
-**Source:** Curated list (rotates daily by date)
 
 ---
 
@@ -56,28 +49,11 @@ Aurora borealis captured during the peak of the Perseids meteor shower at the be
 ## 🧠 Trivia of the Day
 _A quick knowledge challenge._
 
-**[Entertainment: Video Games · Hard]** Which of these TrackMania environments was NOT in the original game?
-> Answer: ||Bay||
+_Trivia lookup failed today._
+
+**Error:** `HTTP Error 429: Too Many Requests`
 
 **Source:** [Open Trivia Database](https://opentdb.com/)
-
----
-
-## ✅ Tip of the Day
-_Practical advice or a small life hack._
-
-Drink a glass of water before your morning coffee — most 'tiredness' is mild dehydration.
-
-**Source:** Curated list (rotates daily by date)
-
----
-
-## 🔎 Discovery of the Day
-_Something new to learn or explore._
-
-A day on Venus is longer than its year — it rotates so slowly that one day exceeds one orbit around the Sun.
-
-**Source:** Curated list (rotates daily by date)
 
 ---
 
@@ -90,13 +66,4 @@ _An event, person, or moment from history on this date._
 
 ---
 
-## ✨ Idea of the Day
-_A thought, concept, possibility, or creative spark._
-
-What if your notes app could ask you questions instead of just storing answers?
-
-**Source:** Curated list (rotates daily by date)
-
----
-
-_Last updated: 2026-08-13T01:29:56.971732+00:00 UTC_
+_Last updated: 2026-08-13T01:48:09.041496+00:00 UTC_
