@@ -5,28 +5,25 @@ Builds a 10-section daily digest (Word, Fact, Quote, Question, Image,
 Trivia, Tip, Discovery, History, Idea "of the Day") and writes it to
 README.md so it can be published with GitHub Pages.
 
-v2 changes:
-- Every section now shows a one-line description of what it is.
-- Every section now shows the actual source (API name + link, or
-  "curated list" for the four sections without a good free API).
-- Failures now show the real error message instead of a generic one,
-  which makes debugging (e.g. rate limits, timeouts) much easier.
+v3 changes:
+- Image of the Day now uses Wikipedia's "Picture of the Day" via the
+  Wikimedia REST API (https://en.wikipedia.org/api/rest_v1/feed/featured/...).
+  No API key, no sign-up, no rate-limit headaches — it's a public,
+  CDN-backed endpoint intended for exactly this kind of daily use.
+  NASA's APOD is no longer used, so the NASA_API_KEY secret is no
+  longer needed (safe to remove from your repo if you'd set it up).
 
-Most sections pull from free, no-key APIs. Four sections (Question,
-Tip, Discovery, Idea) don't have good free APIs, so they rotate
-through a curated list deterministically based on today's date, so
-the site is stable across multiple runs on the same day.
+Every section still shows a description and a "Source" link, and
+failures show the real error message instead of a generic one.
 
-The Image of the Day uses NASA's APOD API. It works with NASA's public
-DEMO_KEY, but that key is shared globally and rate limited. For
-reliability, set a NASA_API_KEY secret in your repo (free, instant
-sign-up at https://api.nasa.gov) — the workflow already passes it
-through automatically if present.
+Four sections (Question, Tip, Discovery, Idea) don't have good free
+APIs, so they rotate through a curated list deterministically based
+on today's date — stable across multiple runs on the same day, but
+changes daily.
 """
 
 import html
 import json
-import os
 import random
 import urllib.error
 import urllib.request
@@ -34,7 +31,7 @@ from datetime import date, datetime, timezone
 
 OUTPUT_FILE = "README.md"
 TIMEOUT = 15
-UA = {"User-Agent": "Mozilla/5.0 (daily-digest-bot)"}
+UA = {"User-Agent": "DailyDigestBot/1.0 (GitHub Actions daily job; no contact configured)"}
 
 TODAY = date.today()
 DAY_SEED = random.Random(TODAY.isoformat())
@@ -47,8 +44,6 @@ def get_json(url, headers=None):
 
 
 # Each section function returns (content_markdown, source_name, source_url).
-# "source_url" is a live link shown under the section so readers (and you,
-# debugging) can see exactly where the data came from.
 
 # ---------------------------------------------------------------------
 # 1. Word of the Day
@@ -156,34 +151,33 @@ def question_of_the_day():
 
 
 # ---------------------------------------------------------------------
-# 5. Image of the Day (NASA APOD)
+# 5. Image of the Day — Wikipedia Picture of the Day (no API key needed)
 # ---------------------------------------------------------------------
 def image_of_the_day():
-    source_name = "NASA Astronomy Picture of the Day (APOD) API"
-    source_url = "https://apod.nasa.gov/apod/astropix.html"
-    api_key = os.environ.get("NASA_API_KEY", "DEMO_KEY")
-    key_note = "your own key" if api_key != "DEMO_KEY" else "shared DEMO_KEY — rate limited"
+    source_name = "Wikipedia Picture of the Day (Wikimedia REST API)"
+    source_url = "https://en.wikipedia.org/wiki/Main_Page"
+    y, m, d = TODAY.strftime("%Y"), TODAY.strftime("%m"), TODAY.strftime("%d")
+    feed_url = f"https://en.wikipedia.org/api/rest_v1/feed/featured/{y}/{m}/{d}"
     try:
-        data = get_json(f"https://api.nasa.gov/planetary/apod?api_key={api_key}")
-        title = data.get("title", "NASA Astronomy Picture of the Day")
-        explanation = data.get("explanation", "")
-        media_type = data.get("media_type", "image")
-        credit = data.get("copyright", "NASA / public domain unless noted")
-        apod_date = data.get("date", TODAY.isoformat())
-        if media_type == "image":
-            img_url = data.get("hdurl") or data.get("url")
-            body = (
-                f"![{title}]({img_url})\n\n**{title}** ({apod_date})\n\n{explanation}"
-                f"\n\n_Credit: {credit}. Fetched using {key_note}._"
-            )
-        else:
-            body = (
-                f"**{title}** (video, {apod_date}) — [watch here]({data.get('url')})"
-                f"\n\n{explanation}\n\n_Credit: {credit}. Fetched using {key_note}._"
-            )
+        data = get_json(feed_url)
+        img = data.get("image")
+        if not img:
+            raise ValueError("today's featured-content feed has no 'image' entry yet")
+
+        raw_title = img.get("title", "Picture of the Day")
+        title = raw_title.replace("File:", "").replace("_", " ")
+        img_url = (img.get("image") or {}).get("source") or (img.get("thumbnail") or {}).get("source")
+        if not img_url:
+            raise ValueError("image entry had no usable image URL")
+        description = (img.get("description") or {}).get("text", "")
+        file_page = img.get("file_page")
+
+        body = f"![{title}]({img_url})\n\n**{title}**\n\n{description}"
+        if file_page:
+            body += f"\n\n[View full details on Wikimedia Commons]({file_page})"
         return body, source_name, source_url
     except Exception as exc:
-        text = f"_Couldn't reach NASA's APOD API today._\n\n**Error:** `{exc}`\n\n_Using: {key_note}._"
+        text = f"_Couldn't reach Wikipedia's Picture of the Day feed today._\n\n**Error:** `{exc}`"
         return text, source_name, source_url
 
 
@@ -332,7 +326,7 @@ SECTIONS = [
     ("💡 Fact of the Day", "Something true, interesting, or surprising.", fact_of_the_day),
     ("💬 Quote of the Day", "A quote — inspirational, funny, or philosophical.", quote_of_the_day),
     ("❓ Question of the Day", "A prompt for reflection, conversation, or curiosity.", question_of_the_day),
-    ("🌌 Image of the Day", "NASA's Astronomy Picture of the Day.", image_of_the_day),
+    ("🌌 Image of the Day", "Wikipedia's Picture of the Day.", image_of_the_day),
     ("🧠 Trivia of the Day", "A quick knowledge challenge.", trivia_of_the_day),
     ("✅ Tip of the Day", "Practical advice or a small life hack.", tip_of_the_day),
     ("🔎 Discovery of the Day", "Something new to learn or explore.", discovery_of_the_day),
