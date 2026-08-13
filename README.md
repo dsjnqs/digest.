@@ -1,13 +1,11 @@
-# Daily Digest — 2026-08-12
+# Daily Digest — 2026-08-13
 
 _A 10-part daily digest, refreshed automatically once a day._
 
 ## 📖 Word of the Day
 _A vocabulary word, expression, or piece of language worth learning._
 
-**ephemeral** *(adjective)* — lasting for a very short time
-
-_(Live lookup failed: HTTP Error 502: Bad Gateway — showing a fallback word.)_
+**levee** *(noun)* — An embankment to prevent inundation; as, the levees along the Mississippi.
 
 **Source:** [Random Word API + Free Dictionary API](https://dictionaryapi.dev/)
 
@@ -16,7 +14,7 @@ _(Live lookup failed: HTTP Error 502: Bad Gateway — showing a fallback word.)_
 ## 💡 Fact of the Day
 _Something true, interesting, or surprising._
 
-15 million blood cells are destroyed in the human body every second.
+Columbia University is the second largest landowner in New York City, after the Catholic Church.
 
 **Source:** [Useless Facts API](https://uselessfacts.jsph.pl/)
 
@@ -25,7 +23,7 @@ _Something true, interesting, or surprising._
 ## 💬 Quote of the Day
 _A quote — inspirational, funny, or philosophical._
 
-"Sadness is but a wall between two gardens." — Kahlil Gibran
+"Keep your face to the sunshine and you cannot see the shadows." — Helen Keller
 
 **Source:** [ZenQuotes API](https://zenquotes.io/)
 
@@ -34,32 +32,32 @@ _A quote — inspirational, funny, or philosophical._
 ## ❓ Question of the Day
 _A prompt for reflection, conversation, or curiosity._
 
-What's something you're curious about but haven't looked into yet?
+What does an ideal ordinary day look like for you?
 
 **Source:** Curated list (rotates daily by date)
 
 ---
 
 ## 🌌 Image of the Day
-_NASA's Astronomy Picture of the Day._
+_Wikipedia's Picture of the Day._
 
-_Couldn't reach NASA's APOD API today._
+![Aurora and perseids.jpg](https://upload.wikimedia.org/wikipedia/commons/3/31/Aurora_and_perseids.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original)
 
-**Error:** `HTTP Error 403: Forbidden`
+**Aurora and perseids.jpg**
 
-_Using: your own key._
+Aurora borealis captured during the peak of the Perseids meteor shower at the beach of Norderney on August 13th, 2024
 
-**Source:** [NASA Astronomy Picture of the Day (APOD) API](https://apod.nasa.gov/apod/astropix.html)
+[View full details on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Aurora_and_perseids.jpg)
+
+**Source:** [Wikipedia Picture of the Day (Wikimedia REST API)](https://en.wikipedia.org/wiki/Main_Page)
 
 ---
 
 ## 🧠 Trivia of the Day
 _A quick knowledge challenge._
 
-**[Geography · Easy]** What is the smallest country in the world?
-> Answer: ||Vatican City||
-
-_(Live lookup failed: HTTP Error 429: Too Many Requests — showing a fallback question.)_
+**[Entertainment: Video Games · Hard]** Which of these TrackMania environments was NOT in the original game?
+> Answer: ||Bay||
 
 **Source:** [Open Trivia Database](https://opentdb.com/)
 
@@ -68,7 +66,7 @@ _(Live lookup failed: HTTP Error 429: Too Many Requests — showing a fallback q
 ## ✅ Tip of the Day
 _Practical advice or a small life hack._
 
-Before agreeing to something, ask 'what would I have to say no to, to say yes to this?'
+Drink a glass of water before your morning coffee — most 'tiredness' is mild dehydration.
 
 **Source:** Curated list (rotates daily by date)
 
@@ -77,7 +75,7 @@ Before agreeing to something, ask 'what would I have to say no to, to say yes to
 ## 🔎 Discovery of the Day
 _Something new to learn or explore._
 
-Some trees communicate and share resources through underground fungal networks nicknamed the 'wood wide web.'
+A day on Venus is longer than its year — it rotates so slowly that one day exceeds one orbit around the Sun.
 
 **Source:** Curated list (rotates daily by date)
 
@@ -86,7 +84,7 @@ Some trees communicate and share resources through underground fungal networks n
 ## 🕰️ History of the Day
 _An event, person, or moment from history on this date._
 
-**1992** — Canada, Mexico and the United States announce completion of negotiations for the North American Free Trade Agreement (NAFTA).
+**1898** — Spanish-American War: Spanish and American forces engage in a mock battle for Manila, after which the Spanish commander surrendered in order to keep the city out of Filipino rebel hands.
 
 **Source:** [On This Day API (byabbe.se)](https://byabbe.se/on-this-day/)
 
@@ -95,10 +93,10 @@ _An event, person, or moment from history on this date._
 ## ✨ Idea of the Day
 _A thought, concept, possibility, or creative spark._
 
-Imagine a resume that lists what you're curious about, not just what you've done.
+What if your notes app could ask you questions instead of just storing answers?
 
 **Source:** Curated list (rotates daily by date)
 
 ---
 
-_Last updated: 2026-08-12T13:33:16.085634+00:00 UTC_
+_Last updated: 2026-08-13T01:29:56.971732+00:00 UTC_
