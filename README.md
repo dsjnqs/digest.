@@ -5,9 +5,7 @@ _A daily digest, refreshed automatically once a day._
 ## 📖 Word of the Day
 _A vocabulary word, expression, or piece of language worth learning._
 
-_Word lookup failed today._
-
-**Error:** `HTTP Error 502: Bad Gateway`
+**vodkas** *(noun)* — A clear distilled alcoholic liquor made from grain mash.
 
 **Source:** [Random Word API + Free Dictionary API](https://dictionaryapi.dev/)
 
@@ -16,7 +14,7 @@ _Word lookup failed today._
 ## 💡 Fact of the Day
 _Something true, interesting, or surprising._
 
-Most lipstick contains fish scales!
+In Vermont, the ratio of cows to people is 10:1
 
 **Source:** [Useless Facts API](https://uselessfacts.jsph.pl/)
 
@@ -66,4 +64,4 @@ _An event, person, or moment from history on this date._
 
 ---
 
-_Last updated: 2026-08-13T01:48:09.041496+00:00 UTC_
+_Last updated: 2026-08-13T07:44:16.935126+00:00 UTC_
