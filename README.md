@@ -1,4 +1,4 @@
-# Daily Digest — 2026-08-14
+# Daily Digest — 2026-08-15
 
 _A daily digest, refreshed automatically once a day._
 
@@ -16,7 +16,7 @@ _Word lookup failed today._
 ## 💡 Fact of the Day
 _Something true, interesting, or surprising._
 
-American Airlines saved $40,000 in 1987 by taking out an olive from First Class salads.
+Ten percent of the Russian government`s income comes from the sale of vodka.
 
 **Source:** [Useless Facts API](https://uselessfacts.jsph.pl/)
 
@@ -25,7 +25,7 @@ American Airlines saved $40,000 in 1987 by taking out an olive from First Class 
 ## 💬 Quote of the Day
 _A quote — inspirational, funny, or philosophical._
 
-"Extraordinary results happen only when you give the best you have to become the best you can be at your most important work." — Gary Keller
+"Man suffers only because he takes seriously what the gods made for fun." — Alan Watts
 
 **Source:** [ZenQuotes API](https://zenquotes.io/)
 
@@ -34,13 +34,13 @@ _A quote — inspirational, funny, or philosophical._
 ## 🌌 Image of the Day
 _Wikipedia's Picture of the Day._
 
-![Galah (Eolophus roseicapilla) female in flight Mount Pleasant.jpg](https://upload.wikimedia.org/wikipedia/commons/0/07/Galah_%28Eolophus_roseicapilla%29_female_in_flight_Mount_Pleasant.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original)
+![Mattupetty Lake View.jpg](https://upload.wikimedia.org/wikipedia/commons/a/af/Mattupetty_Lake_View.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original)
 
-**Galah (Eolophus roseicapilla) female in flight Mount Pleasant.jpg**
+**Mattupetty Lake View.jpg**
 
-Galah (Eolophus roseicapilla) female in Mount Pleasant, South Australia. Also known as the pink and grey cockatoo or rose-breasted cockatoo.
+Tea plantations around Mattupetty lake near Munnar, Kerala, India. The country—which celebrates its independence day today—is the second largest producer and exporter of tea in the world, and also its largest consumer with a vibrant and diverse tea&nbsp;culture.
 
-[View full details on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Galah_(Eolophus_roseicapilla)_female_in_flight_Mount_Pleasant.jpg)
+[View full details on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mattupetty_Lake_View.jpg)
 
 **Source:** [Wikipedia Picture of the Day (Wikimedia REST API)](https://en.wikipedia.org/wiki/Main_Page)
 
@@ -60,10 +60,10 @@ _Trivia lookup failed today._
 ## 🕰️ History of the Day
 _An event, person, or moment from history on this date._
 
-**1791** — Slaves from plantations in Saint-Domingue hold a Vodou ceremony lead by houngan Dutty Boukman at Bois Caïman, marking the start of the Haitian Revolution.
+**1969** — The Woodstock Music & Art Fair opens in upstate New York, featuring some of the top rock musicians of the era.
 
 **Source:** [On This Day API (byabbe.se)](https://byabbe.se/on-this-day/)
 
 ---
 
-_Last updated: 2026-08-14T07:41:57.778860+00:00 UTC_
+_Last updated: 2026-08-15T06:49:17.277370+00:00 UTC_
