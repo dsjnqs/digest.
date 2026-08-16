@@ -1,4 +1,4 @@
-# Daily Digest — 2026-08-15
+# Daily Digest — 2026-08-16
 
 _A daily digest, refreshed automatically once a day._
 
@@ -16,7 +16,7 @@ _Word lookup failed today._
 ## 💡 Fact of the Day
 _Something true, interesting, or surprising._
 
-Ten percent of the Russian government`s income comes from the sale of vodka.
+The average person spends 6 months of their life sitting at red lights.
 
 **Source:** [Useless Facts API](https://uselessfacts.jsph.pl/)
 
@@ -25,7 +25,7 @@ Ten percent of the Russian government`s income comes from the sale of vodka.
 ## 💬 Quote of the Day
 _A quote — inspirational, funny, or philosophical._
 
-"Man suffers only because he takes seriously what the gods made for fun." — Alan Watts
+"Motivation is what gets you started. Habit is what keeps you going." — Jim Rohn
 
 **Source:** [ZenQuotes API](https://zenquotes.io/)
 
@@ -34,13 +34,13 @@ _A quote — inspirational, funny, or philosophical._
 ## 🌌 Image of the Day
 _Wikipedia's Picture of the Day._
 
-![Mattupetty Lake View.jpg](https://upload.wikimedia.org/wikipedia/commons/a/af/Mattupetty_Lake_View.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original)
+![Iglesia del convento de Jesús, Setúbal, Portugal, 2021-09-10, DD 04-06 HDR.jpg](https://upload.wikimedia.org/wikipedia/commons/e/e5/Iglesia_del_convento_de_Jes%C3%BAs%2C_Set%C3%BAbal%2C_Portugal%2C_2021-09-10%2C_DD_04-06_HDR.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original)
 
-**Mattupetty Lake View.jpg**
+**Iglesia del convento de Jesús, Setúbal, Portugal, 2021-09-10, DD 04-06 HDR.jpg**
 
-Tea plantations around Mattupetty lake near Munnar, Kerala, India. The country—which celebrates its independence day today—is the second largest producer and exporter of tea in the world, and also its largest consumer with a vibrant and diverse tea&nbsp;culture.
+Altar of the church of the Monastery of Jesus, Setúbal, Portugal. The monastery, founded in 1490, is one of the oldest buildings in Manueline style (Portuguese version of Gothic) and served as a monastery of Poor Clare nuns.
 
-[View full details on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mattupetty_Lake_View.jpg)
+[View full details on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Iglesia_del_convento_de_Jes%C3%BAs,_Set%C3%BAbal,_Portugal,_2021-09-10,_DD_04-06_HDR.jpg)
 
 **Source:** [Wikipedia Picture of the Day (Wikimedia REST API)](https://en.wikipedia.org/wiki/Main_Page)
 
@@ -60,10 +60,10 @@ _Trivia lookup failed today._
 ## 🕰️ History of the Day
 _An event, person, or moment from history on this date._
 
-**1969** — The Woodstock Music & Art Fair opens in upstate New York, featuring some of the top rock musicians of the era.
+**1920** — The congress of the Communist Party of Bukhara opens. The congress would call for armed revolution.
 
 **Source:** [On This Day API (byabbe.se)](https://byabbe.se/on-this-day/)
 
 ---
 
-_Last updated: 2026-08-15T06:49:17.277370+00:00 UTC_
+_Last updated: 2026-08-16T06:50:37.953863+00:00 UTC_
